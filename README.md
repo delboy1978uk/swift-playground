@@ -86,4 +86,79 @@ var songs2 = ["Today was a Fairytale", "Welcome to New York", "Fifteen"]
 var both = songs + songs2
 both += ["Everything has Changed"]
 ```
+### dictionaries
+```swift
+var person = [
+    "first": "Taylor",
+    "middle": "Alison",
+    "last": "Swift",
+    "month": "December",
+    "website": "taylorswift.com"
+]
 
+person["middle"]
+person["month"]
+```
+### conditionals
+```swift
+import UIKit
+
+var action: String = ""
+var person: String = "hater"
+
+if person == "hater" {
+    action = "hate"
+} else if person == "player" {
+    action = "play"
+} else {
+    action = "cruise"
+}
+
+var stayOutTooLate = true
+var nothingInBrain = true
+
+if stayOutTooLate && nothingInBrain {
+    action = "cruise"
+}
+
+if !stayOutTooLate && !nothingInBrain {
+    action = "do something else"
+}
+```
+### loops
+```swift
+import UIKit
+
+print("1 x 10 is \(1 * 10)")
+print("2 x 10 is \(2 * 10)")
+print("3 x 10 is \(3 * 10)")
+print("4 x 10 is \(4 * 10)")
+print("5 x 10 is \(5 * 10)")
+print("6 x 10 is \(6 * 10)")
+print("7 x 10 is \(7 * 10)")
+print("8 x 10 is \(8 * 10)")
+print("9 x 10 is \(9 * 10)")
+print("10 x 10 is \(10 * 10)")
+
+// 1 ..< 5 will count 1, 2, 3, 4
+for i in 1...10 {
+    print("\(i) x 10 is \(i * 10)")
+}
+
+var str = "Fakers gonna"
+
+// _ when you don't need index
+for _ in 1 ... 5 {
+    str += " fake"
+}
+
+print(str)
+```
+#### looping over arrays
+```swift
+var songs = ["Shake it Off", "You Belong with Me", "Look What You Made Me Do"]
+
+for song in songs {
+    print("My favorite song is \(song)")
+}
+```
