@@ -162,3 +162,29 @@ for song in songs {
     print("My favorite song is \(song)")
 }
 ```
+### while loops
+```swift
+import UIKit
+
+var counter = 0
+
+while true {
+    print("Counter is now \(counter)")
+    counter += 1
+    
+    if counter == 78 {
+        break
+    }
+}
+
+var songs = ["Shake it Off", "You Belong with Me", "Look What You Made Me Do"]
+
+for song in songs {
+    if song == "You Belong with Me" {
+        continue
+    }
+    
+    print("\(song) is a great song")
+}
+```
+
