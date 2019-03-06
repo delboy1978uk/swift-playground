@@ -269,7 +269,7 @@ func countLetters(in string: String) {
 }
 
 countLetters(in: "Hello")
-```:
+```
 #### return values
 ```swift
 import UIKit
@@ -296,3 +296,55 @@ if albumIsTaylor(name: "Blue") {
     print("Who made that?!")
 }
 ```
+### optionals
+Note the return type has a ? 
+```swift
+func getHaterStatus(weather: String) -> String? {
+    if weather == "sunny" {
+        return nil
+    } else {
+        return "Hate"
+    }
+}
+
+
+var status: String?
+status = getHaterStatus(weather: "rainy")
+
+func takeHaterAction(status: String) {
+    if status == "Hate" {
+        print("Hating")
+    }
+}
+
+// if let casts the var to type
+if let haterStatus = getHaterStatus(weather: "rainy") {
+    takeHaterAction(status: haterStatus)
+} else {
+    //optional did not contain a value
+}
+```
+#### force unwrapping
+```swift
+func yearAlbumReleased(name: String) -> Int? {
+    if name == "Taylor Swift" { return 2006 }
+    if name == "Fearless" { return 2008 }
+    if name == "Speak Now" { return 2010 }
+    if name == "Red" { return 2012 }
+    if name == "1989" { return 2014 }
+
+    return nil
+}
+
+var year = yearAlbumReleased(name: "Red")
+
+// note the ! without it it displays Optional(valuehere)
+if year == nil {
+    print("There was an error")
+} else {
+    print("It was released in \(year!)")
+}
+
+var blah :String! // implicitly unwraped optional. be careful!
+```
+
