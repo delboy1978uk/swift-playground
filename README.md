@@ -1,5 +1,5 @@
 # swift-playground
-### data types
+## data types
 ```swift
 import UIKit
 
@@ -16,7 +16,7 @@ var longitude: Float = -86.783333
 
 var missABeat: Bool  = false
 ```
-### operators
+## operators
 ```swift
 var a = 10
 a = a + 1
@@ -48,7 +48,7 @@ name == "Derek Stephen McLean"
 missABeat
 !missABeat
 ```
-### string interpolation
+## string interpolation
 ```swift
 import UIKit
 
@@ -62,7 +62,7 @@ var latitude = 50.166667
 "Your name is \(name), your age is \(age), and your latitude is \(latitude)"
 "You are \(age) years old. In another \(age) years you will be \(age * 2)."
 ```
-### arrays 
+## arrays 
 ```swift
 import UIKit
 
@@ -86,7 +86,7 @@ var songs2 = ["Today was a Fairytale", "Welcome to New York", "Fifteen"]
 var both = songs + songs2
 both += ["Everything has Changed"]
 ```
-### dictionaries
+## dictionaries
 ```swift
 var person = [
     "first": "Taylor",
@@ -99,7 +99,7 @@ var person = [
 person["middle"]
 person["month"]
 ```
-### conditionals
+## conditionals
 ```swift
 import UIKit
 
@@ -125,7 +125,7 @@ if !stayOutTooLate && !nothingInBrain {
     action = "do something else"
 }
 ```
-### loops
+## loops
 ```swift
 import UIKit
 
@@ -187,7 +187,7 @@ for song in songs {
     print("\(song) is a great song")
 }
 ```
-### switch statements
+## switch statements
 ```swift
 import UIKit
 
@@ -211,7 +211,7 @@ switch liveAlbums {
         print("Have you done something new?")
 }
 
-
+// with range operator
 switch studioAlbums {
     case 0...1:
         print("You're just starting out")
@@ -224,5 +224,75 @@ switch studioAlbums {
     
     default:
         print("Have you done something new?")
+}
+```
+## functions
+```swift
+import UIKit
+
+func favoriteAlbum() {
+    print("My favorite is Fearless")
+}
+
+favoriteAlbum()
+```
+#### external and internal parameter names
+Normal version, one param
+```swift
+func countLettersInString(string: String) {
+    print("The string \(string) has \(string.count) letters.")
+}
+
+countLettersInString(string: "Hello")
+```
+aliased param way:
+```swift
+func countLettersInString(myString str: String) {
+    print("The string \(str) has \(str.count) letters.")
+}
+
+countLettersInString(myString: "Hello")
+```
+if you dont need keys for args:
+```swift
+// use _ if key is not needed
+func countLettersInString2(_ str: String) {
+    print("The string \(str) has \(str.count) letters.")
+}
+
+countLettersInString2("Hello")
+```
+Many coders prefer using `in`, `for`, and `with` instead of `_` (i disagree with keyword `for` though!
+```swift
+func countLetters(in string: String) {
+    print("The string \(string) has \(string.count) letters.")
+}
+
+countLetters(in: "Hello")
+```:
+#### return values
+```swift
+import UIKit
+
+func albumIsTaylor(name: String) -> Bool {
+    if name == "Taylor Swift" { return true }
+    if name == "Fearless" { return true }
+    if name == "Speak Now" { return true }
+    if name == "Red" { return true }
+    if name == "1989" { return true }
+    
+    return false
+}
+
+if albumIsTaylor(name: "Red") {
+    print("That's one of hers!")
+} else {
+    print("Who made that?!")
+}
+
+if albumIsTaylor(name: "Blue") {
+    print("That's one of hers!")
+} else {
+    print("Who made that?!")
 }
 ```
