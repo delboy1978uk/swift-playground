@@ -570,3 +570,49 @@ for album in allAlbums {
     }
 }
 ```
+You can force it at your own risk using `!`
+```swift
+var taylorSwift = StudioAlbum(name: "Taylor Swift", studio: "The Castles Studios")
+var fearless = StudioAlbum(name: "Speak Now", studio: "Aimeeland Studio")
+
+var allAlbums: [Album] = [taylorSwift, fearless]
+
+for album in allAlbums {
+    let studioAlbum = album as! StudioAlbum
+    print(studioAlbum.studio)
+}
+```
+or more efficiently:
+```swift
+for album in allAlbums as! [StudioAlbum] {
+    print(album.studio)
+}
+```
+or at array level with nil coalescing
+```swift
+for album in allAlbums as? [LiveAlbum] ?? [LiveAlbum]() {
+    print(album.location)
+}
+```
+#### converting types
+```swift
+let number = 5
+let text = String(number)
+print(text)
+```
+### closures
+```swift
+import UIKit
+
+let vw = UIView()
+
+UIView.animate(withDuration: 0.5, animations: {
+    vw.alpha = 0
+})
+
+// or trailing style, if it's the last arg
+
+UIView.animate(withDuration: 0.5) {
+    vw.alpha = 0
+}
+```
