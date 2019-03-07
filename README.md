@@ -347,4 +347,116 @@ if year == nil {
 
 var blah :String! // implicitly unwraped optional. be careful!
 ```
+### optional chaining
+```swift
 
+func albumReleased(year: Int) -> String? {
+    switch year {
+    case 2006: return "Taylor Swift"
+    case 2008: return "Fearless"
+    case 2010: return "Speak Now"
+    case 2012: return "Red"
+    case 2014: return "1989"
+    default: return nil
+    }
+}
+
+// only if optional is set will anything after ? run
+let album = albumReleased(year: 2006)?.uppercased()
+print("The album is \(album)")
+
+// you can have as many as you like
+// let album = albumReleased(year: 2006)?.someOptionalValue?.someOtherOptionalValue?.whatever
+```
+#### nil coalescing operator
+```swift
+let otherAlbum = albumReleased(year: 2008) ?? "unknown"
+print("The album is \(otherAlbum)")
+```
+### enumerations
+```swift
+enum WeatherType {
+    case sun
+    case cloud
+    case rain
+    case wind
+    case snow
+}
+
+func getHaterStatus(weather: WeatherType) -> String? {
+    switch weather {
+    case .sun:
+        return nil
+    case .cloud, .wind:
+        return "dislike"
+    case .rain, .snow:
+        return "hate"
+    }
+}
+
+getHaterStatus(weather: .cloud)
+```
+### structs
+```swift
+import UIKit
+
+struct Person {
+    var clothes: String
+    var shoes: String
+    
+    func describe() {
+        print("I like wearing \(clothes) with \(shoes)")
+    }
+}
+
+let taylor = Person(clothes: "T-shirts", shoes: "sneakers")
+let del = Person(clothes: "kilt", shoes: "army boots")
+
+print(taylor.clothes)
+print(del.shoes)
+
+var taylorCopy = taylor
+taylorCopy.shoes = "flip flops"
+
+print(taylor)
+print(taylorCopy)
+
+del.describe()
+```
+### classes
+```swift
+import UIKit
+
+class Person {
+    var clothes: String
+    var shoes: String
+    
+    init(clothes: String, shoes: String) {
+        self.clothes = clothes
+        self.shoes = shoes
+    }
+}
+
+let del = Person(clothes: "kilt", shoes: "boots");
+```
+#### inheritance
+```swift
+class CountrySinger: Singer {
+    override func sing() {
+        print("Trucks, guitars, and liquor")
+    }
+}
+
+class HeavyMetalSinger: Singer {
+    var noiseLevel: Int
+
+    init(name: String, age: Int, noiseLevel: Int) {
+        self.noiseLevel = noiseLevel
+        super.init(name: name, age: age)
+    }
+
+    override func sing() {
+        print("Grrrrr rargh rargh rarrrrgh!")
+    }
+}
+```
