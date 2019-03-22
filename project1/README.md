@@ -103,3 +103,54 @@ if let imageToLoad = selectedImage {
     imageView.image  = UIImage(named: imageToLoad)
 }
 ```
+### tweaks
+- storyboard, click image view in detail view controller
+- content mode - aspect fill
+- add code to detail view controller
+```swift
+override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.hidesBarsOnTap = true
+}
+
+override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    navigationController?.hidesBarsOnTap = false
+}
+```
+- click table view cell picture in document outline
+- attributes inspector, change accessory to 'disclosure indicator' ( that's > on the list item)
+- add to view controller
+```swift
+title = "Storm Viewer"
+navigationController?.navigationBar.prefersLargeTitles = true
+```
+- add to detail view controller
+```swift
+title = selectedImage
+navigationItem.largeTitleDisplayMode = .never
+```
+### challenges
+- Use Interface Builder to select the text label inside your table view cell and adjust its font size to something larger – experiment and see what looks good.
+- In your main table view, show the image names in sorted order, so “nssl0033.jpg” comes before “nssl0034.jpg”.
+- Rather than show image names in the detail title bar, show “Picture X of Y”, where Y is the total number of images and X is the selected picture’s position in the array. Make sure you count from 1 rather than 0.
+#### label
+- click label item Title in document outline
+- change font size in attributes panel
+#### sort images
+- view controller view did load
+```swift
+pictures.sort(by: <)
+```
+#### picture x of y
+- detail view controller
+```swift
+var selectedPictureNumber = 0
+var totalPictures = 0
+```
+- view controller table view select row method
+```swift
+vc.selectedPictureNumber = indexPath.row
+vc.totalPictures = indexPath.count
+```
+
