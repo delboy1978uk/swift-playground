@@ -1,1 +1,63 @@
 # project 2
+## setup
+- new project
+- iOS single view app
+- Product name Project 2
+- org identifier uk.co.mcleandigital
+- uncheck boxes, next
+## layout
+- interface builder
+- click in view controller
+- Editor > Navigation Controller
+- object library
+- drag 3 buttons in
+- size inspector ruler icon
+- y coordinates 100, 230, 360
+- click first button
+- ctrl drag out view, highlights blue
+- shift click (multiple) Top Space to Safe Area, Center Horizontally in Safe Area
+- click away to deslect
+- click assets folder
+- drag flag images into assets folder
+- interface builder, first button, attributes inspector
+- delete label text 'button'
+- select image from dropdown
+- repeat other 2 buttons
+- ctrl drag second button to first
+- shift click Vertical Spacing, Center Horizontally
+- repeat ctrl dragging third to second button
+- select all 3 buttons
+- Editor > Resolve Auto Layout Issues > Update Frames
+- Alt+Cmd+Return or View > Assistant Editor > Show Assistant Editor
+- ctrl drag buttons, flag1 2 & 3
+## hooking it up
+- view controller
+```swift
+var countries = [String]()
+var score = 0
+```
+- view did load
+```swift
+countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
+```
+- add function
+```swift
+func askQuestion() {
+    button1.setImage(UIImage(named: countries[0]), for: .normal)
+    button2.setImage(UIImage(named: countries[1]), for: .normal)
+    button3.setImage(UIImage(named: countries[2]), for: .normal)
+}
+```
+- add call to `askQuestion()` at end of view did load
+### fix image border
+- back in view did load before ask
+```swift
+flag1.layer.borderWidth = 1
+flag2.layer.borderWidth = 1
+flag3.layer.borderWidth = 1
+
+flag1.layer.borderColor = UIColor.lightGray.cgColor
+flag2.layer.borderColor = UIColor.lightGray.cgColor
+flag3.layer.borderColor = UIColor(red: 1.0, green: 0.6, blue: 0.2, alpha: 1.0).cgColor
+```
+
