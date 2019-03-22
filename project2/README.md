@@ -60,4 +60,51 @@ flag1.layer.borderColor = UIColor.lightGray.cgColor
 flag2.layer.borderColor = UIColor.lightGray.cgColor
 flag3.layer.borderColor = UIColor(red: 1.0, green: 0.6, blue: 0.2, alpha: 1.0).cgColor
 ```
+## random numbers
+- add to ask question at top
+```swift
+countries.shuffle()
+```
+- add view controller property
+```swift
+var correctAnswer = 0
+```
+- add to bottom of addQuestion()
+```swift
+correctAnswer = Int.random(in: 0...2)
+title = countries[correctAnswer].uppercased()
+```
+## creating IBActions
+- open interface builder and assistant editor
+- top left of assistant change manual to Automatic > ViewController
+- ctrl-drag first flag into controller
+- choose Action, Type to UIButton, and buttonTapped for the name
+- ctrl drag flags 2 and 3 onto the buttonTapped method
+- click flags, attributes inspector, view section, tag each flag as 0, 1, and 2
+- add to buttonTapped method
+```swift
+var title: String
 
+if sender.tag == correctAnswer {
+    title = "Correct"
+    score += 1
+} else {
+    title = "Wrong"
+    score -= 1
+}
+
+// display a scores alert
+let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
+ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+present(ac, animated: true)
+```
+- notice the crap error message, it means askQuestion now needs a UIAlertAction passed to it - default it to nil
+```
+func askQuestion(action: UIAlertAction! = nil) {
+```
+## challenge
+- Try showing the player’s score in the navigation bar, alongside the flag to guess.
+- Keep track of how many questions have been asked, and show one final alert controller after they have answered 10. This should show their final score.
+- When someone chooses the wrong flag, tell them their mistake in your alert message – something like “Wrong! That’s the flag of France,” for example.
+### first challenge
+- 
