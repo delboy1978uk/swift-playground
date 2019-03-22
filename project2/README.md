@@ -160,7 +160,7 @@ title = "Which is " + countries[correctAnswer].uppercased() + "? Current score \
             score += 1
         } else {
             title = "Wrong"
-            message = "The correct answer was flag " + (correctAnswer + 1)  + ".\n"
+            message = "The correct answer was flag \(correctAnswer + 1).\n"
             score -= 1
         }
         
