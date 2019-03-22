@@ -61,7 +61,7 @@ class ViewController: UIViewController {
             score += 1
         } else {
             title = "Wrong"
-            message = "The correct answer was " + countries[correctAnswer].uppercased() + ".\n"
+            message = "The correct answer was falg" + (correctAnswer + 1) + ".\n"
             score -= 1
         }
         
