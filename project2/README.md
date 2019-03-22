@@ -107,4 +107,69 @@ func askQuestion(action: UIAlertAction! = nil) {
 - Keep track of how many questions have been asked, and show one final alert controller after they have answered 10. This should show their final score.
 - When someone chooses the wrong flag, tell them their mistake in your alert message – something like “Wrong! That’s the flag of France,” for example.
 ### first challenge
-- 
+- edit ask question
+```swift
+title = "Which is " + countries[correctAnswer].uppercased() + "? Current score \(score)"
+```
+### second challenge
+- refactor code like so:
+```swift
+    func resetGame(action: UIAlertAction! = nil) {
+        score = 0
+        currentQuestion = 0
+        askQuestion()
+    }
+    
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        var title: String
+        var message: String
+        var label: String
+        var handler = askQuestion
+        
+        currentQuestion += 1
+        
+        if sender.tag == correctAnswer {
+            title = "Correct"
+            score += 1
+        } else {
+            title = "Wrong"
+            score -= 1
+        }
+        
+        if (currentQuestion < 10) {
+            message = "Your score is \(score)."
+            label = "Continue"
+        } else {
+            message = "Game over! Your final score is \(score)."
+            handler = resetGame
+            label = "Start Again"
+        }
+        
+        // display a scores alert
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: label, style: .default, handler: handler))
+        present(ac, animated: true)
+    }
+```
+### third challenge
+- refactor like so
+```swift
+        if sender.tag == correctAnswer {
+            title = "Correct"
+            message = ""
+            score += 1
+        } else {
+            title = "Wrong"
+            message = "The correct answer was " + countries[correctAnswer].uppercased() + ".\n"
+            score -= 1
+        }
+        
+        if (currentQuestion < 10) {
+            message += "Your score is \(score)."
+            label = "Continue"
+        } else {
+            message += "Game over! Your final score is \(score)."
+            handler = resetGame
+            label = "Start Again"
+        }
+```

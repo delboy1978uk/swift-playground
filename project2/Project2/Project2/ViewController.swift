@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     var countries = [String]()
     var score = 0
     var correctAnswer = 0
+    var currentQuestion = 0;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,23 +38,45 @@ class ViewController: UIViewController {
         flag2.setImage(UIImage(named: countries[1]), for: .normal)
         flag3.setImage(UIImage(named: countries[2]), for: .normal)
         correctAnswer = Int.random(in: 0...2)
-        title = countries[correctAnswer].uppercased()
+        title = "Which is " + countries[correctAnswer].uppercased() + "? Current score \(score)"
+    }
+    
+    func resetGame(action: UIAlertAction! = nil) {
+        score = 0
+        currentQuestion = 0
+        askQuestion()
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {
         var title: String
+        var message: String
+        var label: String
+        var handler = askQuestion
+        
+        currentQuestion += 1
         
         if sender.tag == correctAnswer {
             title = "Correct"
+            message = ""
             score += 1
         } else {
             title = "Wrong"
+            message = "The correct answer was " + countries[correctAnswer].uppercased() + ".\n"
             score -= 1
         }
         
+        if (currentQuestion < 10) {
+            message += "Your score is \(score)."
+            label = "Continue"
+        } else {
+            message += "Game over! Your final score is \(score)."
+            handler = resetGame
+            label = "Start Again"
+        }
+        
         // display a scores alert
-        let ac = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: label, style: .default, handler: handler))
         present(ac, animated: true)
     }
 }
