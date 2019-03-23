@@ -81,4 +81,42 @@ override func observeValue(forKeyPath keyPath: String?, of object: Any?, change:
 }
 ```
 ## refactoring
+- create an array of sites as a property
+```swift
+    var websites = [
+        "barrheadboy.com",
+        "independencelive.net",
+        "indylive.radio",
+        "randompublicjournal.com",
+        "thoughtcontrolscotland.com",
+        "wingsoverscotland.com"
+    ]
+```
+- edit the intial load url
+```swift
+let url = URL(string: "https://" + websites[5])!
+```
+- refactor to a for loop
+```swift
+for website in websites {
+    ac.addAction(UIAlertAction(title: website, style: .default, handler: openPage))
+}
+```
+- add a check so it only loads from our domains
+```swift
+func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    let url = navigationAction.request.url
 
+    if let host = url?.host {
+        for website in websites {
+            if host.contains(website) {
+                decisionHandler(.allow)
+                return
+            }
+        }
+    }
+
+    decisionHandler(.cancel)
+}
+``` 
+## challenge

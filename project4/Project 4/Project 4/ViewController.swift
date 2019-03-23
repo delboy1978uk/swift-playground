@@ -13,6 +13,14 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     var webView: WKWebView!
     var progressView: UIProgressView!
+    var websites = [
+        "barrheadboy.com",
+        "independencelive.net",
+        "indylive.radio",
+        "randompublicjournal.com",
+        "thoughtcontrolscotland.com",
+        "wingsoverscotland.com"
+    ]
     
     override func loadView() {
         webView = WKWebView()
@@ -36,19 +44,18 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         
-        let url = URL(string: "https://wingsoverscotland.com")!
+        let url = URL(string: "https://" + websites[5])!
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
     }
 
     @objc func openTapped() {
         let ac = UIAlertController(title: "Open page…", message: nil, preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "barrheadboy.com", style: .default, handler: openPage))
-        ac.addAction(UIAlertAction(title: "independencelive.net", style: .default, handler: openPage))
-        ac.addAction(UIAlertAction(title: "indylive.radio", style: .default, handler: openPage))
-        ac.addAction(UIAlertAction(title: "randompublicjournal.com", style: .default, handler: openPage))
-        ac.addAction(UIAlertAction(title: "thoughtcontrolscotland.com", style: .default, handler: openPage))
-        ac.addAction(UIAlertAction(title: "wingsoverscotland.com", style: .default, handler: openPage))
+        
+        for website in websites {
+            ac.addAction(UIAlertAction(title: website, style: .default, handler: openPage))
+        }
+        
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         ac.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
         present(ac, animated: true)
