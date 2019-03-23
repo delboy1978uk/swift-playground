@@ -21,6 +21,14 @@ class ViewController: UIViewController, WKNavigationDelegate {
         "thoughtcontrolscotland.com",
         "wingsoverscotland.com"
     ]
+    var safeLinks = [
+        "youtube.com",
+        "livestream.com",
+        "twitter.com",
+        "facebook.com",
+        "google",
+        "player.shoutca.st",
+    ]
     
     override func loadView() {
         webView = WKWebView()
@@ -35,11 +43,14 @@ class ViewController: UIViewController, WKNavigationDelegate {
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
+        let previous = UIBarButtonItem(barButtonSystemItem: .rewind, target: webView, action: #selector(webView.goBack))
+        let next = UIBarButtonItem(barButtonSystemItem: .play, target: webView, action: #selector(webView.goForward))
+        
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit()
         let progressButton = UIBarButtonItem(customView: progressView)
         
-        toolbarItems = [progressButton, spacer, refresh]
+        toolbarItems = [progressButton, spacer, previous, spacer, next, spacer, refresh]
         navigationController?.isToolbarHidden = false
         
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
@@ -75,6 +86,31 @@ class ViewController: UIViewController, WKNavigationDelegate {
         if keyPath == "estimatedProgress" {
             progressView.progress = Float(webView.estimatedProgress)
         }
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        let url = navigationAction.request.url
+        
+        if let host = url?.host {
+            for website in websites {
+                if host.contains(website) || (url?.absoluteString.contains(".js"))!  || (url?.absoluteString.contains(".css"))! {
+                    decisionHandler(.allow)
+                    return
+                }
+            }
+            for website in safeLinks {
+                if host.contains(website) {
+                    decisionHandler(.allow)
+                    return
+                }
+            }
+            let ac = UIAlertController(title: title, message: (url?.absoluteString)! + " blocked.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
+            present(ac, animated: true)
+        }
+        
+        decisionHandler(.cancel)
+        
     }
 }
 

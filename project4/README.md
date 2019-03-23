@@ -120,3 +120,45 @@ func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigatio
 }
 ``` 
 ## challenge
+- If users try to visit a URL that isn’t allowed, show an alert saying it’s blocked.
+- Try making two new toolbar items with the titles Back and Forward. You should make them use webView.goBack and webView.goForward.
+- For more of a challenge, try changing the initial view controller to a table view like in project 1, where users can choose their website from a list rather than just having the first in the array loaded up front.
+### challenge 1
+add alert to webView method
+```swift
+let ac = UIAlertController(title: title, message: (url?.absoluteString)! + " blocked.", preferredStyle: .alert)
+ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: nil))
+present(ac, animated: true)
+```
+- add safe links for blocked stuff on other domains
+```swift
+    var safeLinks = [
+        "youtube.com",
+        "livestream.com",
+        "twitter.com",
+        "facebook.com",
+        "google",
+        "player.shoutca.st",
+    ]
+```
+- check in the webview section
+```swift
+for website in safeLinks {
+    if host.contains(website) {
+        decisionHandler(.allow)
+        return
+    }
+}
+```
+### challenge 2
+- add new buttons in viewDidLoad
+```swift
+let previous = UIBarButtonItem(barButtonSystemItem: .rewind, target: webView, action: #selector(webView.goBack))
+let next = UIBarButtonItem(barButtonSystemItem: .play, target: webView, action: #selector(webView.goForward))
+```
+- add to array
+```swift
+toolbarItems = [progressButton, spacer, previous, spacer, next, spacer, refresh]
+```
+### challenge 3
+
