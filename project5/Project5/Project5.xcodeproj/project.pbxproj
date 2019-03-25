@@ -12,6 +12,7 @@
 		23EAA7F222484B7900932F3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23EAA7F022484B7900932F3A /* Main.storyboard */; };
 		23EAA7F422484B7A00932F3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23EAA7F322484B7A00932F3A /* Assets.xcassets */; };
 		23EAA7F722484B7A00932F3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23EAA7F522484B7A00932F3A /* LaunchScreen.storyboard */; };
+		23EAA7FF224851C500932F3A /* start.txt in Resources */ = {isa = PBXBuildFile; fileRef = 23EAA7FE224851C500932F3A /* start.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		23EAA7F322484B7A00932F3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		23EAA7F622484B7A00932F3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		23EAA7F822484B7A00932F3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		23EAA7FE224851C500932F3A /* start.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = start.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		23EAA7EB22484B7900932F3A /* Project5 */ = {
 			isa = PBXGroup;
 			children = (
+				23EAA7FE224851C500932F3A /* start.txt */,
 				23EAA7EC22484B7900932F3A /* AppDelegate.swift */,
 				23EAA7EE22484B7900932F3A /* ViewController.swift */,
 				23EAA7F022484B7900932F3A /* Main.storyboard */,
@@ -123,6 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23EAA7F722484B7A00932F3A /* LaunchScreen.storyboard in Resources */,
+				23EAA7FF224851C500932F3A /* start.txt in Resources */,
 				23EAA7F422484B7A00932F3A /* Assets.xcassets in Resources */,
 				23EAA7F222484B7900932F3A /* Main.storyboard in Resources */,
 			);
