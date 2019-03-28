@@ -13,27 +13,36 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Project2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Project6a" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pzb-bk-Hzb">
-                                <rect key="frame" x="87.5" y="100" width="200" height="100"/>
+                                <rect key="frame" x="84.5" y="84" width="206" height="179.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Pzb-bk-Hzb" secondAttribute="height" multiplier="100:87" id="G7r-x2-n4H"/>
+                                </constraints>
                                 <state key="normal" image="spain"/>
                                 <connections>
                                     <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="smv-5G-10w"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bEb-ZY-m1K">
-                                <rect key="frame" x="87.5" y="212" width="200" height="100"/>
+                                <rect key="frame" x="84.5" y="275.5" width="206" height="179"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="bEb-ZY-m1K" secondAttribute="height" multiplier="100:87" id="5ua-5F-Jj0"/>
+                                </constraints>
                                 <state key="normal" image="spain"/>
                                 <connections>
                                     <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5uI-y6-mvR"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DR4-Cg-Xup">
-                                <rect key="frame" x="87.5" y="325" width="200" height="100"/>
+                                <rect key="frame" x="84.5" y="467.5" width="206" height="179.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="DR4-Cg-Xup" secondAttribute="height" multiplier="100:87" id="GKd-k4-Bc4"/>
+                                </constraints>
                                 <state key="normal" image="spain"/>
                                 <connections>
                                     <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QeC-qZ-snF"/>
@@ -42,12 +51,15 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="DR4-Cg-Xup" secondAttribute="bottom" constant="20" id="1cF-s9-ekR"/>
                             <constraint firstItem="bEb-ZY-m1K" firstAttribute="top" secondItem="Pzb-bk-Hzb" secondAttribute="bottom" constant="12" id="C1A-tp-QR6"/>
                             <constraint firstItem="DR4-Cg-Xup" firstAttribute="centerX" secondItem="bEb-ZY-m1K" secondAttribute="centerX" id="M7x-3O-Zqg"/>
                             <constraint firstItem="DR4-Cg-Xup" firstAttribute="top" secondItem="bEb-ZY-m1K" secondAttribute="bottom" constant="13" id="Uxh-q7-HJI"/>
                             <constraint firstItem="bEb-ZY-m1K" firstAttribute="centerX" secondItem="Pzb-bk-Hzb" secondAttribute="centerX" id="WGj-4b-T19"/>
+                            <constraint firstItem="bEb-ZY-m1K" firstAttribute="height" secondItem="Pzb-bk-Hzb" secondAttribute="height" id="m6G-i2-6Vt"/>
                             <constraint firstItem="Pzb-bk-Hzb" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="naB-zb-t9M"/>
-                            <constraint firstItem="Pzb-bk-Hzb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="36" id="yin-Qc-HIa"/>
+                            <constraint firstItem="DR4-Cg-Xup" firstAttribute="height" secondItem="bEb-ZY-m1K" secondAttribute="height" id="pyu-WZ-BKP"/>
+                            <constraint firstItem="Pzb-bk-Hzb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="yin-Qc-HIa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -60,7 +72,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="898" y="-564"/>
+            <point key="canvasLocation" x="896.79999999999995" y="-564.46776611694156"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="S55-Pg-oXH">
