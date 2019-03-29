@@ -11,4 +11,5 @@ Supported orientations can be checked/unchecked in main project settings.
 - do equal heights again from third to second
 - ctrl drag each flag to itself
 - choose aspect ratio 
+## visual format language
 
