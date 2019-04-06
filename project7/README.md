@@ -120,11 +120,54 @@ let html = """
 
 webView.loadHTMLString(html, baseURL: nil)
 ```
-- hook up detailviewcontroller
+- hook up detailviewcontroller, add to view controller
 ```swift
 override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let vc = DetailViewController()
     vc.detailItem = petitions[indexPath.row]
     navigationController?.pushViewController(vc, animated: true)
+}
+```
+Create another view controller, this time in code
+- OPen AppDelegate.swift
+- in didFinishLaunchingWithOptions function, add this before then return
+```swift
+if let tabBarController = window?.rootViewController as? UITabBarController {
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    let vc = storyboard.instantiateViewController(withIdentifier: "NavController")
+    vc.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 1)
+    tabBarController.viewControllers?.append(vc)
+}
+```
+- replace the url string in viewDidLoad of the view controller 
+```swift
+let urlString: String
+
+if navigationController?.tabBarItem.tag == 0 {
+    // urlString = "https://api.whitehouse.gov/v1/petitions.json?limit=100"
+    urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
+} else {
+    // urlString = "https://api.whitehouse.gov/v1/petitions.json?signatureCountFloor=10000&limit=100"
+    urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"
+}
+```
+- add an error function 
+```swift
+func showError() {
+    let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again.", preferredStyle: .alert)
+    ac.addAction(UIAlertAction(title: "OK", style: .default))
+    present(ac, animated: true)
+}
+```
+- refactor the json parsing code to throw errors on failure
+```swift
+if let url = URL(string: urlString) {
+    if let data = try? Data(contentsOf: url) {
+        parse(json: data)
+    } else {
+        showError()
+    }
+} else {
+    showError()
 }
 ```
