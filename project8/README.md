@@ -179,4 +179,91 @@ for row in 0..<4 {
 }
 ```
 ## loading a level and adding button targets
-- 
+- create level1.txt
+```
+HA|UNT|ED: Ghosts in residence
+LE|PRO|SY: A Biblical skin disease
+TW|ITT|ER: Short online chirping
+OLI|VER: Has a Dickensian twist
+ELI|ZAB|ETH: Head of state, British style
+SA|FA|RI: The zoological web
+POR|TL|AND: Hipster heartland
+```
+- add some properties
+```swift
+var activatedButtons = [UIButton]()
+var solutions = [String]()
+
+var score = 0
+var level = 1
+```
+- add methods below view did load 
+```swift
+@objc func letterTapped(_ sender: UIButton) {
+}
+
+@objc func submitTapped(_ sender: UIButton) {
+}
+
+@objc func clearTapped(_ sender: UIButton) {
+}
+```
+- tell submit to run submit tapped when tapped, add after submit creation
+```swift
+submit.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
+```
+- the same for clear
+```swift
+clear.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
+```
+- and letter button, add within loop
+```swift
+letterButton.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
+```
+### loading the text file
+- create load level function
+```swift
+func loadLevel() {
+    var clueString = ""
+    var solutionString = ""
+    var letterBits = [String]()
+
+    if let levelFileURL = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
+        if let levelContents = try? String(contentsOf: levelFileURL) {
+            var lines = levelContents.components(separatedBy: "\n")
+            lines.shuffle()
+
+            for (index, line) in lines.enumerated() {
+                let parts = line.components(separatedBy: ": ")
+                let answer = parts[0]
+                let clue = parts[1]
+
+                clueString += "\(index + 1). \(clue)\n"
+
+                let solutionWord = answer.replacingOccurrences(of: "|", with: "")
+                solutionString += "\(solutionWord.count) letters\n"
+                solutions.append(solutionWord)
+
+                let bits = answer.components(separatedBy: "|")
+                letterBits += bits
+            }
+        }
+    }
+
+    // Now configure the buttons and labels
+    cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
+    answersLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
+
+    letterBits.shuffle()
+
+    if letterBits.count == letterButtons.count {
+        for i in 0 ..< letterButtons.count {
+            letterButtons[i].setTitle(letterBits[i], for: .normal)
+        }
+    }
+}
+```
+- add to view did load 
+```swift
+loadLevel()
+```
