@@ -19,7 +19,11 @@ class ViewController: UIViewController {
     var activatedButtons = [UIButton]()
     var solutions = [String]()
     
-    var score = 0
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
     var level = 1
     
     override func loadView() {
@@ -28,6 +32,8 @@ class ViewController: UIViewController {
         
         let buttonsView = UIView()
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
+        buttonsView.layer.borderWidth = 1
+        buttonsView.layer.borderColor = UIColor.black.cgColor
         view.addSubview(buttonsView)
         
         scoreLabel = UILabel()
@@ -148,7 +154,6 @@ class ViewController: UIViewController {
         
         cluesLabel.backgroundColor = .red
         answersLabel.backgroundColor = .blue
-        buttonsView.backgroundColor = .green
     }
 
     override func viewDidLoad() {
@@ -164,6 +169,44 @@ class ViewController: UIViewController {
     }
     
     @objc func submitTapped(_ sender: UIButton) {
+        guard let answerText = currentAnswer.text else { return }
+        
+        if let solutionPosition = solutions.firstIndex(of: answerText) {
+            activatedButtons.removeAll()
+            
+            var splitAnswers = answersLabel.text?.components(separatedBy: "\n")
+            splitAnswers?[solutionPosition] = answerText
+            answersLabel.text = splitAnswers?.joined(separator: "\n")
+            
+            currentAnswer.text = ""
+            score += 1
+            
+            if score == 7 {
+                let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
+                present(ac, animated: true)
+            }
+        } else {
+            displayYoureWrongAlert(wronAgnswer: answerText)
+            score -= 1
+        }
+    }
+    
+    func displayYoureWrongAlert(wronAgnswer: String) {
+        let ac = UIAlertController(title: "Wrong!", message: "You thought \(wronAgnswer) was the anser?\nTry again!!!", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Fine", style: .default))
+        present(ac, animated: true)
+    }
+    
+    func levelUp(action: UIAlertAction) {
+        level += 1
+        solutions.removeAll(keepingCapacity: true)
+        
+        loadLevel()
+        
+        for btn in letterButtons {
+            btn.isHidden = false
+        }
     }
     
     @objc func clearTapped(_ sender: UIButton) {
