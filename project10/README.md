@@ -73,7 +73,7 @@ navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, ta
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 ```
 - add didFinishPickingMediaWithInfo code
-```sw3ift
+```swift
 func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     guard let image = info[.editedImage] as? UIImage else { return }
 
@@ -92,3 +92,82 @@ func getDocumentsDirectory() -> URL {
     return paths[0]
 }
 ```
+## Custom subclasses of NSObject
+- create new cocoa touch class
+- call it Person, extend NSObject
+- add properties
+```swift
+var name: String
+var image: String
+```
+- add init function
+```swift
+init(name: String, image: String) {
+    self.name = name
+    self.image = image
+}
+```
+- add people to viewcontroller
+```swift
+var people = [Person]()
+```
+- add this before the call to dismiss
+```swift
+let person = Person(name: "Unknown", image: imageName)
+people.append(person)
+collectionView.reloadData()
+```
+## connecting up the people
+- refactor numberOfItemsInSection
+```swift
+override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return people.count
+}
+```
+- refactor cellForItemAt
+```swift
+override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Person", for: indexPath) as? PersonCell else {
+            fatalError("Unable to dequeue PersonCell.")
+        }
+        
+        let person = people[indexPath.item]
+        
+        cell.name.text = person.name
+        
+        let path = getDocumentsDirectory().appendingPathComponent(person.image)
+        cell.imageView.image = UIImage(contentsOfFile: path.path)
+        
+        cell.imageView.layer.borderColor = UIColor(white: 0, alpha: 0.3).cgColor
+        cell.imageView.layer.borderWidth = 2
+        cell.imageView.layer.cornerRadius = 3
+        cell.layer.cornerRadius = 7
+        
+        return cell
+    }
+```
+- add didSelectItemAt
+```swift
+override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let person = people[indexPath.item]
+
+    let ac = UIAlertController(title: "Rename person", message: nil, preferredStyle: .alert)
+    ac.addTextField()
+
+    ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+    ac.addAction(UIAlertAction(title: "OK", style: .default) { [weak self, weak ac] _ in
+        guard let newName = ac?.textFields?[0].text else { return }
+        person.name = newName
+
+        self?.collectionView.reloadData()
+    })
+
+    present(ac, animated: true)
+}
+```
+## challenge @todo
+- Add a second UIAlertController that gets shown when the user taps a picture, asking them whether they want to rename the person or delete them.
+- Try using picker.sourceType = .camera when creating your image picker, which will tell it to create a new image by taking a photo. This is only available on devices (not on the simulator) so you might want to check the return value of UIImagePickerController.isSourceTypeAvailable() before trying to use it!
+- Modify project 1 so that it uses a collection view controller rather than a table view controller. I recommend you keep a copy of your original table view controller code so you can refer back to it later on.
+

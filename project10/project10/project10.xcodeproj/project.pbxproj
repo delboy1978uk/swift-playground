@@ -13,6 +13,7 @@
 		2325545A226BB3E0003D15D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23255459226BB3E0003D15D3 /* Assets.xcassets */; };
 		2325545D226BB3E0003D15D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2325545B226BB3E0003D15D3 /* LaunchScreen.storyboard */; };
 		23255465226BB975003D15D3 /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23255464226BB975003D15D3 /* PersonCell.swift */; };
+		23255467226BF3A4003D15D3 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23255466226BF3A4003D15D3 /* Person.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		2325545C226BB3E0003D15D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2325545E226BB3E0003D15D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23255464226BB975003D15D3 /* PersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
+		23255466226BF3A4003D15D3 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				23255452226BB3DE003D15D3 /* AppDelegate.swift */,
 				23255454226BB3DE003D15D3 /* ViewController.swift */,
+				23255466226BF3A4003D15D3 /* Person.swift */,
 				23255456226BB3DE003D15D3 /* Main.storyboard */,
 				23255464226BB975003D15D3 /* PersonCell.swift */,
 				23255459226BB3E0003D15D3 /* Assets.xcassets */,
@@ -140,6 +143,7 @@
 			files = (
 				23255455226BB3DE003D15D3 /* ViewController.swift in Sources */,
 				23255453226BB3DE003D15D3 /* AppDelegate.swift in Sources */,
+				23255467226BF3A4003D15D3 /* Person.swift in Sources */,
 				23255465226BB975003D15D3 /* PersonCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
