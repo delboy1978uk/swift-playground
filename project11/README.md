@@ -92,3 +92,127 @@ makeBouncer(at: CGPoint(x: 768, y: 0))
 makeBouncer(at: CGPoint(x: 1024, y: 0))
 ```
 # spinning slots: SKAction
+- create a makeSlot() function
+```swift
+func makeSlot(at position: CGPoint, isGood: Bool) {
+    var slotBase: SKSpriteNode
+
+    if isGood {
+        slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
+    } else {
+        slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
+    }
+
+    slotBase.position = position
+    addChild(slotBase)
+}
+```
+- add to diMove() before bouncers
+```swift
+makeSlot(at: CGPoint(x: 128, y: 0), isGood: true)
+makeSlot(at: CGPoint(x: 384, y: 0), isGood: false)
+makeSlot(at: CGPoint(x: 640, y: 0), isGood: true)
+makeSlot(at: CGPoint(x: 896, y: 0), isGood: false)
+```
+- add a glow to slot
+```
+func makeSlot(at position: CGPoint, isGood: Bool) {
+    var slotBase: SKSpriteNode
+    var slotGlow: SKSpriteNode
+
+    if isGood {
+        slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
+        slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
+    } else {
+        slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
+        slotGlow = SKSpriteNode(imageNamed: "slotGlowBad")
+    }
+
+    slotBase.position = position
+    slotGlow.position = position
+
+    addChild(slotBase)
+    addChild(slotGlow)
+}
+```
+- add a spin in make slot
+```swift
+let spin = SKAction.rotate(byAngle: .pi, duration: 10)
+let spinForever = SKAction.repeatForever(spin)
+slotGlow.run(spinForever)
+```
+## collision cdetection SKPhysicsContactDelegate
+We need to add rectangle physics to the slots
+- add before addChild with slotBase
+```swift
+slotBase.physicsBody = SKPhysicsBody(rectangleOf: slotBase.size)
+slotBase.physicsBody?.isDynamic = false
+```
+- modify code, give the slots a name
+```swift
+if isGood {
+    slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
+    slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
+    slotBase.name = "good"
+} else {
+    slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
+    slotGlow = SKSpriteNode(imageNamed: "slotGlowBad")
+    slotBase.name = "bad"
+}
+```
+- add this where the balls are created
+```swift
+ball.name = "ball"
+```
+- make our scene the contact delegate of the physics world
+```swift
+class GameScene: SKScene, SKPhysicsContactDelegate {
+```
+- add tghis below where we set scenes physics body
+```swift
+physicsWorld.contactDelegate = self
+```
+- set balls contactTestBitMask property to be equal to their collisionBitMask above balls restitution being set
+```swift
+ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask     
+```
+- add these two methods
+```swift
+func collisionBetween(ball: SKNode, object: SKNode) {
+    if object.name == "good" {
+        destroy(ball: ball)
+    } else if object.name == "bad" {
+        destroy(ball: ball)
+    }
+}
+
+func destroy(ball: SKNode) {
+    ball.removeFromParent()
+}
+```
+- add the contact checking method
+```swift
+func didBegin(_ contact: SKPhysicsContact) {
+    if contact.bodyA.node?.name == "ball" {
+        collisionBetween(ball: contact.bodyA.node!, object: contact.bodyB.node!)
+    } else if contact.bodyB.node?.name == "ball" {
+        collisionBetween(ball: contact.bodyB.node!, object: contact.bodyA.node!)
+    }
+}
+```
+- run the game and check it out now
+- tap furiously and eventually the game will crash, this is due to both slots triggering code, second time though it is nil!
+- refactor didBegin
+```swift
+func didBegin(_ contact: SKPhysicsContact) {
+    guard let nodeA = contact.bodyA.node else { return }
+    guard let nodeB = contact.bodyB.node else { return }
+
+    if nodeA.name == "ball" {
+        collisionBetween(ball: nodeA, object: nodeB)
+    } else if nodeB.name == "ball" {
+        collisionBetween(ball: nodeB, object: nodeA)
+    }
+}
+```
+
