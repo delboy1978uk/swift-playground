@@ -335,4 +335,8 @@ Here are the options
 -  Scale Start / Range / Speed: how big particles should be when created, how much to vary it, and how much it should change over time. A negative value means "shrink slowly."
 -  Rotation Start / Range / Speed: what Z rotation particles should have, how much to vary it, and how much they should spin over time.
 -  Color Blend Factor / Range / Speed: how much to color each particle, how much to vary it, and how much it should change over time.
+## challenges @todo
+- The pictures we’re using in have other ball pictures rather than just “ballRed”. Try writing code to use a random ball color each time they tap the screen.
+- Right now, users can tap anywhere to have a ball created there, which makes the game too easy. Try to force the Y value of new balls so they are near the top of the screen.
+- Give players a limit of five balls, then remove obstacle boxes when they are hit. Can they clear all the pins with just five balls? You could make it so that landing on a green slot gets them an extra ball.
 
