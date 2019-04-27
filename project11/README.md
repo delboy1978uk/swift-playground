@@ -215,4 +215,88 @@ func didBegin(_ contact: SKPhysicsContact) {
     }
 }
 ```
+## scores on the board
+- declare these properties at the top of the class
+```swift
+var scoreLabel: SKLabelNode!
 
+var score = 0 {
+    didSet {
+        scoreLabel.text = "Score: \(score)"
+    }
+}
+```
+- add this to didMove()
+```swift
+scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+scoreLabel.text = "Score: 0"
+scoreLabel.horizontalAlignmentMode = .right
+scoreLabel.position = CGPoint(x: 980, y: 700)
+addChild(scoreLabel)
+```
+- modify collision code
+```swift
+func collisionBetween(ball: SKNode, object: SKNode) {
+    if object.name == "good" {
+        destroy(ball: ball)
+        score += 1
+    } else if object.name == "bad" {
+        destroy(ball: ball)
+        score -= 1
+    }
+}
+```
+- add the following properties
+```swift
+var editLabel: SKLabelNode!
+
+var editingMode: Bool = false {
+    didSet {
+        if editingMode {
+            editLabel.text = "Done"
+        } else {
+            editLabel.text = "Edit"
+        }
+    }
+}
+```
+- add to didMove()
+```swift
+editLabel = SKLabelNode(fontNamed: "Chalkduster")
+editLabel.text = "Edit"
+editLabel.position = CGPoint(x: 80, y: 700)
+addChild(editLabel)
+```
+- under let location refactor let ball, add this
+```swift
+let location = touch.location(in: self)
+
+let objects = nodes(at: location)
+
+if objects.contains(editLabel) {
+    editingMode.toggle()
+} else {
+    let ball = SKSpriteNode(imageNamed: "ballRed")
+    // rest of ball code
+}
+```
+- in the else statement where the ball is made, refactor again
+```swift
+if editingMode {
+    // create a box
+} else {
+    // existing create a ball code here
+}
+```
+- add the box creation code
+```swift
+let size = CGSize(width: Int.random(in: 16...128), height: 16)
+let box = SKSpriteNode(color: UIColor(red: CGFloat.random(in: 0...1), green: CGFloat.random(in: 0...1), blue: CGFloat.random(in: 0...1), alpha: 1), size: size)
+box.zRotation = CGFloat.random(in: 0...3)
+box.position = location
+
+box.physicsBody = SKPhysicsBody(rectangleOf: box.size)
+box.physicsBody?.isDynamic = false
+
+addChild(box)
+```
