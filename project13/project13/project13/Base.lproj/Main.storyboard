@@ -56,7 +56,7 @@
                                     <constraint firstAttribute="height" constant="44" id="4r5-4O-kIb"/>
                                     <constraint firstAttribute="width" constant="120" id="Zb8-ZO-l0I"/>
                                 </constraints>
-                                <state key="normal" title="Change Filter"/>
+                                <state key="normal" title="CISepiaTone"/>
                                 <connections>
                                     <action selector="changeFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bnt-I7-Jo8"/>
                                 </connections>
@@ -67,7 +67,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="6SC-zN-sQU"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="save:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DKd-sf-6AL"/>
                                 </connections>
@@ -95,6 +95,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="vdk-V9-jXC"/>
                     <connections>
+                        <outlet property="changeFilterButton" destination="c4M-6d-5vV" id="Jt3-LU-hAc"/>
                         <outlet property="imageView" destination="evz-p7-Hxh" id="6qb-a0-aTI"/>
                         <outlet property="intensity" destination="AiR-oY-K7i" id="kMT-C3-Rbp"/>
                     </connections>

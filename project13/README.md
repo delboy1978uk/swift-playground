@@ -165,4 +165,29 @@ func applyProcessing() {
 }
 ```
 ## challenges
+- Try making the Save button show an error if there was no image in the image view.
+- Make the Change Filter button change its title to show the name of the currently selected filter.
+- Experiment with having more than one slider, to control each of the input keys you care about. For example, you might have one for radius and one for intensity.
+### challenge 1
+- in save function change guard let to this
+```swift
+guard let image = imageView.image else {
+    let ac = UIAlertController(title: "Save error", message: "You must first add an image!", preferredStyle: .alert)
+    ac.addAction(UIAlertAction(title: "OK", style: .default))
+    present(ac, animated: true)
+    return
+}
+```
+### challenge 2
+- add an outlet by ctrl dragging the button
+```swift
+@IBOutlet weak var changeFilterButton: UIButton!
+```
+- in set filtre, add 
+```swift
+changeFilterButton.setTitle(actionTitle, for: .normal)
+```
+- change button label in interface builder
+### challenge 3
+- @todo
 
