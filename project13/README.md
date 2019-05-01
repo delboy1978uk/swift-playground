@@ -2,6 +2,7 @@
 Using UIImagePickerController and UISlider and some Core Image
 ## building the interface
 - create a new single view app
+- add can we save photos message in info.plist under Privacy - Photo Library Additions Usage Description
 - embed the view controller inside a navigation controller
 - drag a `UIView` into the controller
 - give the new view a width of 375 and height of 470, with X:0 and Y:64
@@ -140,4 +141,28 @@ func applyProcessing() {
 }
 ```
 ## saving the image
+- fill in the save method
+```swift
+@IBAction func save(_ sender: Any) {
+    guard let image = imageView.image else { return }
+
+    UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+}
+```
+- create the error handling didFinishSavingWithError
+```swift
+@objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+    if let error = error {
+        // we got back an error!
+        let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    } else {
+        let ac = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
+}
+```
+## challenges
 
