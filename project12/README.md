@@ -74,4 +74,42 @@ if let savedPeople = defaults.object(forKey: "people") as? Data {
 }
 ```
 ## using Codable
+NSCoding works with both Swift and Objective C, so works with User defaults.
+But it is possible to do it differently using `Codable` if only working in Swift. 
+This solution uses `Codable` and JSON instead of `UserDefaults`
+- make another copy of project 10
+- make person implement Codable
+```swift
+class Person: NSObject, Codable {
+```
+- add then save method
+```
+func save() {
+    let jsonEncoder = JSONEncoder()
+    if let savedData = try? jsonEncoder.encode(people) {
+        let defaults = UserDefaults.standard
+        defaults.set(savedData, forKey: "people")
+    } else {
+        print("Failed to save people.")
+    }
+}
+```
+- add the load code
+```
+let defaults = UserDefaults.standard
+
+if let savedPeople = defaults.object(forKey: "people") as? Data {
+    let jsonDecoder = JSONDecoder()
+
+    do {
+        people = try jsonDecoder.decode([Person].self, from: savedPeople)
+    } catch {
+        print("Failed to load people")
+    }
+}
+```
+## challenges @todo
+- Modify project 1 so that it remembers how many times each storm image was shown – you don’t need to show it anywhere, but you’re welcome to try modifying your original copy of project 1 to show the view count as a subtitle below each image name in the table view.
+- Modify project 2 so that it saves the player’s highest score, and shows a special message if their new score beat the previous high score.
+- Modify project 5 so that it saves the current word and all the player’s entries to UserDefaults, then loads them back when the app launches.
 
