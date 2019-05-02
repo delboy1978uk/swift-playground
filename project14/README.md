@@ -107,3 +107,80 @@ addChild(cropNode)
 ```swift
 cropNode.maskNode = SKSpriteNode(imageNamed: "whackMask")
 ```
+## making penguins appear
+- add properties to whack slot
+```swift
+var isVisible = false
+var isHit = false
+```
+- create a show method
+```swift
+func show(hideTime: Double) {
+    if isVisible { return }
+
+    charNode.run(SKAction.moveBy(x: 0, y: 80, duration: 0.05))
+    isVisible = true
+    isHit = false
+
+    if Int.random(in: 0...2) == 0 {
+        charNode.texture = SKTexture(imageNamed: "penguinGood")
+        charNode.name = "charFriend"
+    } else {
+        charNode.texture = SKTexture(imageNamed: "penguinEvil")
+        charNode.name = "charEnemy"
+    }
+}
+```
+- add this to game scene
+```
+var popupTime = 0.85
+```
+For reference, here is how to run a closure after a delay
+```swift
+DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+    self?.doStuff()
+}
+```
+- add the createEnemy() function
+```swift
+func createEnemy() {
+    popupTime *= 0.991
+
+    slots.shuffle()
+    slots[0].show(hideTime: popupTime)
+
+    if Int.random(in: 0...12) > 4 { slots[1].show(hideTime: popupTime) }
+    if Int.random(in: 0...12) > 8 {  slots[2].show(hideTime: popupTime) }
+    if Int.random(in: 0...12) > 10 { slots[3].show(hideTime: popupTime) }
+    if Int.random(in: 0...12) > 11 { slots[4].show(hideTime: popupTime)  }
+
+    let minDelay = popupTime / 2.0
+    let maxDelay = popupTime * 2
+    let delay = Double.random(in: minDelay...maxDelay)
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+        self?.createEnemy()
+    }
+}
+```
+- now add this to didMove
+```swift
+DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+    self?.createEnemy()
+}
+```
+- add a hide method to the whack slot
+```swift
+func hide() {
+    if !isVisible { return }
+
+    charNode.run(SKAction.moveBy(x: 0, y: -80, duration: 0.05))
+    isVisible = false
+}
+```
+-add this to the end of `show()`
+```swift
+DispatchQueue.main.asyncAfter(deadline: .now() + (hideTime * 3.5)) { [weak self] in
+    self?.hide()
+}
+```
