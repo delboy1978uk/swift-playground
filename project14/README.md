@@ -184,3 +184,80 @@ DispatchQueue.main.asyncAfter(deadline: .now() + (hideTime * 3.5)) { [weak self]
     self?.hide()
 }
 ```
+## whack to win: SKAction sequences
+1 `SKAction.wait(forDuration:)` creates an action that waits for a period of time, measured in seconds.
+2 `SKAction.run(block:)` will run any code we want, provided as a closure. "Block" is Objective-C's name for a Swift closure.
+3 `SKAction.sequence()` takes an array of actions, and executes them in order. Each action won't start executing until the previous one finished.
+- put this method into the WhackSlot class
+```swift
+func hit() {
+    isHit = true
+
+    let delay = SKAction.wait(forDuration: 0.25)
+    let hide = SKAction.moveBy(x: 0, y: -80, duration: 0.5)
+    let notVisible = SKAction.run { [unowned self] in self.isVisible = false }
+    charNode.run(SKAction.sequence([delay, hide, notVisible]))
+}
+```
+- fill in touches began method
+```swift
+override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    guard let touch = touches.first else { return }
+    let location = touch.location(in: self)
+    let tappedNodes = nodes(at: location)
+
+    for node in tappedNodes {
+        if node.name == "charFriend" {
+            // they shouldn't have whacked this penguin
+        } else if node.name == "charEnemy" {
+            // they should have whacked this one
+        }
+    }
+}
+```
+- in the friendly penguin if block add this
+```swift
+guard let whackSlot = node.parent?.parent as? WhackSlot else { continue }
+if !whackSlot.isVisible { continue }
+if whackSlot.isHit { continue }
+
+whackSlot.hit()
+score -= 5
+
+run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion:false))
+```
+- and in the evil penguin else
+```swift
+guard let whackSlot = node.parent?.parent as? WhackSlot else { continue }
+if !whackSlot.isVisible { continue }
+if whackSlot.isHit { continue }
+
+whackSlot.charNode.xScale = 0.85
+whackSlot.charNode.yScale = 0.85
+
+whackSlot.hit()
+score += 1
+
+run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion:false))
+```
+- add this to gamescene
+```swift
+var numRounds = 0
+```
+- put this code just before the popupTime assignment in createEnemy()
+```swift
+numRounds += 1
+
+if numRounds >= 30 {
+    for slot in slots {
+        slot.hide()
+    }
+
+    let gameOver = SKSpriteNode(imageNamed: "gameOver")
+    gameOver.position = CGPoint(x: 512, y: 384)
+    gameOver.zPosition = 1
+    addChild(gameOver)
+
+    return
+}
+```
