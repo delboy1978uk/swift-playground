@@ -7,6 +7,7 @@
 - run the app and you should have a nice map
 ## Annotations and coordinates
 - open assistant editor and create an outlet for the map view called `mapView`
+- ctrl drag the map view to the orange and white view controller icon and set the delegate for the map view to our view controller
 - create new iOS > Source > Cocoa Touch Class
 - Call it Capital and subclass of NSObject
 - implement MKAnnotation
@@ -91,3 +92,8 @@ func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, callou
     present(ac, animated: true)
 }
 ```
+## challenges @todo
+- Try typecasting the return value from dequeueReusableAnnotationView() so that it's an MKPinAnnotationView. Once that’s done, change the pinTintColor property to your favorite UIColor.
+- Add a UIAlertController that lets users specify how they want to view the map. There's a mapType property that draws the maps in different ways. For example, .satellite gives a satellite view of the terrain.
+- Modify the callout button so that pressing it shows a new view controller with a web view, taking users to the Wikipedia entry for that city.
+
