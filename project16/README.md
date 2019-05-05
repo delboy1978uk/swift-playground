@@ -40,4 +40,54 @@ let washington = Capital(title: "Washington DC", coordinate: CLLocationCoordinat
 mapView.addAnnotations([london, oslo, paris, rome, washington])
 ```
 -run the app and you can see the pins and names, but not the info yet
+## MKPinAnnotationView
+- make the view controller implement `MKMapViewDelegate`
+```swift
+class ViewController: UIViewController, MKMapViewDelegate {
+```
+- create a `mapView` method in the controll;er
+1 If the annotation isn't from a capital city, it must return nil so iOS uses a default view.
+2 Define a reuse identifier. This is a string that will be used to ensure we reuse annotation views as much as possible.
+3 Try to dequeue an annotation view from the map view's pool of unused views.
+4 If it isn't able to find a reusable view, create a new one using MKPinAnnotationView and sets its canShowCallout property to true. This triggers the popup with the city name.
+5 Create a new UIButton using the built-in .detailDisclosure type. This is a small blue "i" symbol with a circle around it.
+6 If it can reuse a view, update that view to use a different annotation.
+```swift
+func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    // 1
+    guard annotation is Capital else { return nil }
 
+    // 2
+    let identifier = "Capital"
+
+    // 3
+    var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+    if annotationView == nil {
+        //4
+        annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        annotationView?.canShowCallout = true
+
+        // 5
+        let btn = UIButton(type: .detailDisclosure)
+        annotationView?.rightCalloutAccessoryView = btn
+    } else {
+        // 6
+        annotationView?.annotation = annotation
+    }
+
+    return annotationView
+}
+```
+- add another mapView call, with a different argument signature
+```swift
+func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    guard let capital = view.annotation as? Capital else { return }
+    let placeName = capital.title
+    let placeInfo = capital.info
+
+    let ac = UIAlertController(title: placeName, message: placeInfo, preferredStyle: .alert)
+    ac.addAction(UIAlertAction(title: "OK", style: .default))
+    present(ac, animated: true)
+}
+```
