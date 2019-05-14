@@ -14,6 +14,8 @@
 		238B494C228B2184003FFFE7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 238B494A228B2184003FFFE7 /* Main.storyboard */; };
 		238B494E228B2185003FFFE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 238B494D228B2185003FFFE7 /* Assets.xcassets */; };
 		238B4951228B2185003FFFE7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 238B494F228B2185003FFFE7 /* LaunchScreen.storyboard */; };
+		238B4965228B2E65003FFFE7 /* explode.sks in Resources */ = {isa = PBXBuildFile; fileRef = 238B4963228B2E65003FFFE7 /* explode.sks */; };
+		238B4966228B2E65003FFFE7 /* fuse.sks in Resources */ = {isa = PBXBuildFile; fileRef = 238B4964228B2E65003FFFE7 /* fuse.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		238B494D228B2185003FFFE7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		238B4950228B2185003FFFE7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		238B4952228B2185003FFFE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		238B4963228B2E65003FFFE7 /* explode.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explode.sks; sourceTree = "<group>"; };
+		238B4964228B2E65003FFFE7 /* fuse.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fuse.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,8 @@
 		238B493F228B2184003FFFE7 /* project20 */ = {
 			isa = PBXGroup;
 			children = (
+				238B4963228B2E65003FFFE7 /* explode.sks */,
+				238B4964228B2E65003FFFE7 /* fuse.sks */,
 				238B4940228B2184003FFFE7 /* AppDelegate.swift */,
 				238B4942228B2184003FFFE7 /* GameScene.sks */,
 				238B4946228B2184003FFFE7 /* GameScene.swift */,
@@ -130,7 +136,9 @@
 			files = (
 				238B494C228B2184003FFFE7 /* Main.storyboard in Resources */,
 				238B4943228B2184003FFFE7 /* GameScene.sks in Resources */,
+				238B4966228B2E65003FFFE7 /* fuse.sks in Resources */,
 				238B494E228B2185003FFFE7 /* Assets.xcassets in Resources */,
+				238B4965228B2E65003FFFE7 /* explode.sks in Resources */,
 				238B4951228B2185003FFFE7 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
