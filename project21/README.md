@@ -60,3 +60,51 @@ let center = UNUserNotificationCenter.current()
     center.add(request)
 ```
 ## acting on responses
+- add this to the controller
+```swift
+func registerCategories() {
+    let center = UNUserNotificationCenter.current()
+    center.delegate = self
+
+    let show = UNNotificationAction(identifier: "show", title: "Tell me more…", options: .foreground)
+    let category = UNNotificationCategory(identifier: "alarm", actions: [show], intentIdentifiers: [])
+
+    center.setNotificationCategories([category])
+}
+```
+- implement the delegate
+```swift
+class ViewController: UIViewController, UNUserNotificationCenterDelegate {
+```
+- call `registerCategories()` at the start of `scheduleLocal()` method
+- add this to the controller
+```swift
+func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    // pull out the buried userInfo dictionary
+    let userInfo = response.notification.request.content.userInfo
+
+    if let customData = userInfo["customData"] as? String {
+        print("Custom data received: \(customData)")
+
+        switch response.actionIdentifier {
+        case UNNotificationDefaultActionIdentifier:
+            // the user swiped to unlock
+            print("Default identifier")
+
+        case "show":
+            // the user tapped our "show more info…" button
+            print("Show more information…")
+
+        default:
+            break
+        }
+    }
+
+    // you must call the completion handler when you're done
+    completionHandler()
+}
+```
+## challenges
+- Update the code in didReceive so that it shows different instances of UIAlertController depending on which action identifier was passed in.
+- For a harder challenge, add a second UNNotificationAction to the alarm category of project 21. Give it the title “Remind me later”, and make it call scheduleLocal() so that the same alert is shown in 24 hours. (For the purpose of these challenges, a time interval notification with 86400 seconds is good enough – that’s roughly how many seconds there are in a day, excluding summer time changes and leap seconds.)
+- And for an even harder challenge, update project 2 so that it reminds players to come back and play every day. This means scheduling a week of notifications ahead of time, each of which launch the app. When the app is finally launched, make sure you call removeAllPendingNotificationRequests() to clear any un-shown alerts, then make new alerts for future days.
